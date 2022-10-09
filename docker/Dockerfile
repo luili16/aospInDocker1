@@ -9,7 +9,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get update && \
     LC_ALL=C DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 libncurses5 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc unzip libffi-dev libssl-dev openssh-client wget python2.7 \ 
+    git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 libncurses5 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc unzip libffi-dev libssl-dev openssh-client wget python2.7 rsync \ 
     ca-certificates-java java-common liblcms2-2 libjpeg8 libnss3 libfreetype6 libpcsclite1 libxi6 libxrender1 libxtst6 libgtk2.0-0 libxrandr2 libxinerama1 libatk-wrapper-java-jni libasound2 libgif4 
 RUN dpkg-reconfigure -f noninteractive tzdata
 RUN locale-gen en_US.UTF-8
@@ -77,8 +77,11 @@ ENV HOME=/home/user
 # 快速备忘
 # 初始化仓库
 # repo init -u https://mirrors.tuna.tsinghua.edu.cn/git/AOSP/platform/manifest
-# 需要某个特定的版本
+# or 需要某个特定的版本
 # repo init -u https://mirrors.tuna.tsinghua.edu.cn/git/AOSP/platform/manifest -b android-8.1.0_r10
+# 同步源代码，会花一定的时间
+# repo sync -j4
+
     
        
 	
