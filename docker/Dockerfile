@@ -57,7 +57,7 @@ ENV LC_ALL=en_US.UTF-8
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US.UTF-8
 
-WORKDIR ${home}/aosp
+WORKDIR /aosp
 
 ARG uid
 ARG gid
@@ -68,6 +68,8 @@ RUN groupadd -g ${gid} user && \
     usermod -aG sudo user
 COPY .bashrc ${home}/.bashrc
 RUN chown -R user:user ${home}
+ENV USER=user
+ENV HOME=/home/user
 
 # 目前用的是清华源的镜像，暂时还没有加入源码下载的过程
 # 请参考 https://mirrors.tuna.tsinghua.edu.cn/help/AOSP/

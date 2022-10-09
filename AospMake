@@ -11,12 +11,23 @@ then
 	docker build --build-arg uid=${UID} --build-arg gid=${GID} -t ${BUILDER_TAG} docker
 elif [ "$1" = "aosp" ]
 then
+
+	if [ ! -d "./user" ]
+	then
+		mkdir user
+	fi	
+	
+	cp ~/.gitconfig ./user/.gitconfig
+	
+	cp ./docker/.bashrc ./user/.bashrc
+	cp ./docker/.vimrc ./user/.vimrc
+	
 	docker run --rm -it \
-	--workdir=/home/user/aosp \
+	--workdir=/aosp \
 	--name ${DOCKER_NAME} \
 	--hostname ${DOCKER_NAME} \
 	--user ${UID}:${GID} \
-	-v ~/.gitconfig:/home/user/.gitconfig:ro \
-	-v $(pwd)/aosp:/home/user/aosp \
+	-v $(pwd)/user:/home/user \
+	-v $(pwd)/aosp:/aosp \
 	${BUILDER_TAG}
 fi	 	

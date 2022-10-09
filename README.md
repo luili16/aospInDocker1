@@ -83,7 +83,7 @@ user@liulixin:~/aosp$ lunch
 
   
 
-
++ 目前是把docker环境中的/home/user映射到了aospInDocker/user这个文件(第一次运行./AospMake aosp)会自动生成，目的是为了保存编译过程中的一些缓存，避免退出docker环境后再进入重新创建。
 
 
 
