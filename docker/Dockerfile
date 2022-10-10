@@ -9,7 +9,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get update && \
     LC_ALL=C DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 libncurses5 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc unzip libffi-dev libssl-dev openssh-client wget python2.7 rsync \ 
+    git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 libncurses5 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc unzip libffi-dev libssl-dev openssh-client wget python2.7 rsync sudo \ 
     ca-certificates-java java-common liblcms2-2 libjpeg8 libnss3 libfreetype6 libpcsclite1 libxi6 libxrender1 libxtst6 libgtk2.0-0 libxrandr2 libxinerama1 libatk-wrapper-java-jni libasound2 libgif4 
 RUN dpkg-reconfigure -f noninteractive tzdata
 RUN locale-gen en_US.UTF-8
@@ -34,7 +34,7 @@ RUN install -m 755 /tmp/repo /usr/bin/repo
 
 # download from https://www.python.org/ftp/python/3.6.10/Python-3.6.10.tgz
 ARG v=3.6.10
-RUN wget -q https://www.python.org/ftp/python/${v}/Python-${v}.tgz && mv Python-${v}.tgz /tmp/
+#RUN wget -q https://www.python.org/ftp/python/${v}/Python-${v}.tgz && mv Python-${v}.tgz /tmp/
 COPY Python-${v}.tgz /tmp/Python-${v}.tgz
 RUN cd /tmp
 RUN tar -xvf /tmp/Python-${v}.tgz && \
@@ -65,7 +65,7 @@ ARG gid
 RUN groupadd -g ${gid} user && \
     useradd -l -u ${uid} -g ${gid} -M user && \
     #添加用户到sudo用户组
-    usermod -aG sudo user
+    echo "user ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 COPY .bashrc ${home}/.bashrc
 RUN chown -R user:user ${home}
 ENV USER=user
